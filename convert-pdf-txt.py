@@ -5,6 +5,15 @@ import glob
 import pytesseract
 import os
 ###### necessario sudo apt install python3-tesserocr
+
+def verificar_e_criar_diretorios(diretorios):
+    for diretorio in diretorios:
+        if not os.path.exists(diretorio):
+            os.makedirs(diretorio)
+            print(f'Diretório {diretorio} criado.')
+        else:
+            print(f'Diretório {diretorio} já existe, pulando a criação.')
+
 ##### PDF PARA IMAGEM
 def pdfs_to_images(input_folder, output_folder):
     # Certifique-se de que o diretório de saída exista
@@ -69,9 +78,11 @@ def processar_todas_as_imagens_no_diretorio(diretorio_entrada, diretorio_saida, 
             # Extrair texto e salvar em um arquivo para cada imagem
             extrair_texto_e_salvar_arquivo(caminho_da_imagem, caminho_do_tesseract, caminho_do_arquivo_saida)
 
+##### ___________main________
 
+diretorios_para_verificar = ['IMG', 'PDF', 'TXT']
+verificar_e_criar_diretorios(diretorios_para_verificar)
 pdfs_to_images('PDF', 'IMG')
-
 # Substitua 'TXT' pelo nome do diretório onde os arquivos de texto serão salvos
 processar_todas_as_imagens_no_diretorio('IMG', 'TXT', '/usr/bin/tesseract')
 
